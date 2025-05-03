@@ -1,0 +1,28 @@
+chainlit_version: 1.0.0
+default_collapse_content: false
+hide_cot: false
+theme:
+  primary_color: "#4F46E5"
+  background_color: "#FFFFFF"
+  font_family: "Inter"
+  chat:
+    avatar_size: 40
+    message_spacing: 24
+    message_padding: 12
+    message_border_radius: 8
+    message_background_color: "#F3F4F6"
+    user_message_background_color: "#4F46E5"
+    user_message_text_color: "#FFFFFF"
+    assistant_message_background_color: "#F3F4F6"
+    assistant_message_text_color: "#1F2937"
+  components:
+    button:
+      background_color: "#4F46E5"
+      text_color: "#FFFFFF"
+      border_radius: 8
+    input:
+      background_color: "#F3F4F6"
+      text_color: "#1F2937"
+      border_radius: 8
+      border_color: "#E5E7EB"
+      focus_border_color: "#4F46E5" 

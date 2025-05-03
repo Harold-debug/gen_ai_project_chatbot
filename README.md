@@ -7,7 +7,8 @@ A Retrieval-Augmented Generation (RAG) based conversational agent for Aivancity 
 - PDF document processing and indexing
 - Semantic search using FAISS vector store
 - OpenAI integration for natural language generation
-- Interactive chat interface
+- Interactive chat interface with authentication
+- Modern UI with Chainlit
 - Efficient document chunking and retrieval
 
 ## Prerequisites
@@ -43,7 +44,10 @@ gen_ai_project_chatbot/
 │   ├── agent.py          # Conversational agent implementation
 │   ├── data_loader.py    # PDF document loading and processing
 │   ├── rag.py            # RAG system implementation
-│   └── initialize.py     # System initialization script
+│   ├── initialize.py     # System initialization script
+│   └── app.py            # Chainlit application
+├── chainlit.md           # Welcome page content
+├── chainlit.yaml         # UI configuration
 ├── pyproject.toml        # Project dependencies
 └── .env                  # Environment variables (not tracked in git)
 ```
@@ -57,10 +61,16 @@ gen_ai_project_chatbot/
 poetry run python src/initialize.py
 ```
 
-3. Test the RAG system:
+3. Start the Chainlit application:
 ```bash
-poetry run python src/test_rag.py
+poetry run chainlit run src/app.py
 ```
+
+4. Open your browser and navigate to `http://localhost:8000`
+
+5. Login with the following credentials:
+   - Username: admin
+   - Password: aivancity
 
 ## Dependencies
 
@@ -88,8 +98,6 @@ poetry add package-name
 
 ## License
 
-[Your chosen license]
 
 ## Contributing
 
-[Your contribution guidelines]
