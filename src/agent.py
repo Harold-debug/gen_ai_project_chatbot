@@ -1,3 +1,8 @@
+"""
+Aivancity Agent implementation using LangGraph and OpenAI.
+This module implements a conversational agent that combines RAG with web search capabilities.
+"""
+
 from typing import Dict, List, Tuple, Any, TypedDict, Annotated
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -14,12 +19,36 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class AgentState(TypedDict):
+    """
+    Type definition for the agent's state.
+    
+    Attributes:
+        input: The current user input
+        chat_history: List of previous messages
+        context: Retrieved context for the current query
+    """
     input: str
     chat_history: List[Annotated[HumanMessage | AIMessage, "chat_history"]]
     context: str
 
 class AivancityAgent:
-    def __init__(self, model_name: str = "gpt-3.5-turbo"):
+    """
+    Conversational agent for Aivancity School that combines RAG with web search.
+    
+    This agent uses:
+    - OpenAI's GPT model for response generation
+    - FAISS-based RAG for document retrieval
+    - DuckDuckGo for web search when needed
+    """
+    
+    def __init__(self, rag_system: RAGSystem, model_name: str = "gpt-3.5-turbo"):
+        """
+        Initialize the agent with RAG system and language model.
+        
+        Args:
+            rag_system: The RAG system for document retrieval
+            model_name: The OpenAI model to use (default: gpt-3.5-turbo)
+        """
         # Original Ollama implementation (commented for future reference)
         # self.llm = ChatOllama(model=model_name)
         
@@ -30,10 +59,12 @@ class AivancityAgent:
             api_key=os.getenv("OPENAI_API_KEY")
         )
         
-        self.rag = RAGSystem()
+        # Initialize components
+        self.rag = rag_system
         self.search = DuckDuckGoSearchRun()
         self.tool_executor = ToolExecutor([self.search])
         
+        # Define the system prompt
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", """You are an AI assistant for Aivancity School for Technology, Business and Society. 
             Your role is to provide accurate and helpful information about the school based on the retrieved context.
@@ -45,7 +76,18 @@ class AivancityAgent:
         ])
 
     def create_agent_graph(self):
+        """
+        Create the LangGraph workflow for the agent.
+        
+        The workflow consists of:
+        1. Retrieve: Get relevant documents and web search results
+        2. Generate: Create response using the retrieved context
+        
+        Returns:
+            A compiled LangGraph workflow
+        """
         def retrieve(state: AgentState) -> AgentState:
+            """Retrieve relevant documents and web search results."""
             query = state["input"]
             docs = self.rag.retrieve(query)
             state["context"] = "\n\n".join(doc.page_content for doc in docs)
@@ -58,6 +100,7 @@ class AivancityAgent:
             return state
 
         def generate(state: AgentState) -> AgentState:
+            """Generate response using the retrieved context."""
             messages = self.prompt.format_messages(
                 chat_history=state["chat_history"],
                 input=state["input"]
@@ -82,7 +125,20 @@ class AivancityAgent:
 
         return workflow.compile()
 
-    def process_message(self, message: str, chat_history: List[Tuple[str, str]]) -> str:
+    def get_response(self, message: str, chat_history: List[Tuple[str, str]] = None) -> str:
+        """
+        Process a message and generate a response.
+        
+        Args:
+            message: The user's message
+            chat_history: Optional list of previous messages
+            
+        Returns:
+            The generated response
+        """
+        if chat_history is None:
+            chat_history = []
+            
         state: AgentState = {
             "input": message,
             "chat_history": [
