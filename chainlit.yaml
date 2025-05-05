@@ -6,7 +6,7 @@ theme:
   background_color: "#FFFFFF"
   font_family: "Inter"
   chat:
-    avatar_size: 40
+    avatar_size: 60
     message_spacing: 24
     message_padding: 12
     message_border_radius: 8
