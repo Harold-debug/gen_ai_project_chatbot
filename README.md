@@ -1,23 +1,8 @@
 # Aivancity RAG Agent
 
-A Retrieval-Augmented Generation (RAG) based conversational agent for Aivancity School, built using LangChain, LangGraph, and FAISS.
+A Retrieval-Augmented Generation (RAG) based conversational agent for Aivancity School, built using LangChain and Chainlit.
 
-## Features
-
-- PDF document processing and indexing
-- Semantic search using FAISS vector store
-- OpenAI integration for natural language generation
-- Interactive chat interface with authentication
-- Modern UI with Chainlit
-- Efficient document chunking and retrieval
-
-## Prerequisites
-
-- Python 3.12.9
-- Poetry for dependency management
-- OpenAI API key
-
-## Installation
+## Quick Start
 
 1. Clone the repository:
 ```bash
@@ -25,52 +10,77 @@ git clone https://github.com/Harold-debug/gen_ai_project_chatbot.git
 cd gen_ai_project_chatbot
 ```
 
-2. Install dependencies using Poetry:
-```bash
-poetry install
-```
+2. Install dependencies (choose one method):
 
-3. Create a `.env` file in the root directory with your OpenAI API key:
+   **Using Poetry:**
+   ```bash
+   poetry install
+   ```
+
+   **Using pip:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Create a `.env` file in the root directory:
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
+
+4. Place your PDF documents in the `data/` directory
+
+5. Initialize the RAG system:
+```bash
+# With Poetry
+poetry run python src/initialize.py
+
+# With pip
+python src/initialize.py
+```
+
+6. Start the application:
+```bash
+# With Poetry
+poetry run chainlit run src/app.py
+
+# With pip
+chainlit run src/app.py
+```
+
+7. Open your browser and navigate to `http://localhost:8000`
+
+## Features
+
+- PDF document processing and indexing
+- Semantic search using FAISS
+- OpenAI integration for natural language generation
+- Interactive chat interface
+- Modern UI with Chainlit
+- Real-time streaming responses
 
 ## Project Structure
 
 ```
 gen_ai_project_chatbot/
-├── data/                  # Directory for PDF documents and indices
+├── data/                  # PDF documents and indices
 ├── src/
-│   ├── agent.py          # Conversational agent implementation
-│   ├── data_loader.py    # PDF document loading and processing
-│   ├── rag.py            # RAG system implementation
-│   ├── initialize.py     # System initialization script
-│   └── app.py            # Chainlit application
-├── chainlit.md           # Welcome page content
-├── chainlit.yaml         # UI configuration
-├── pyproject.toml        # Project dependencies
-└── .env                  # Environment variables (not tracked in git)
+│   ├── agent.py          # Conversational agent
+│   ├── data_loader.py    # PDF processing
+│   ├── rag.py            # RAG system
+│   ├── initialize.py     # System setup
+│   └── app.py            # Main application
+├── chainlit.md           # Welcome page
+├── chainlit.yaml         # UI config
+└── .env                  # Environment variables
 ```
 
-## Usage
+## Requirements
 
-1. Place your PDF documents in the `data/` directory.
+- Python 3.12.9
+- OpenAI API key
+- PDF documents to process
 
-2. Initialize the RAG system:
-```bash
-poetry run python src/initialize.py
-```
 
-3. Start the Chainlit application:
-```bash
-poetry run chainlit run src/app.py
-```
-
-4. Open your browser and navigate to `http://localhost:8000`
-
-5. Login with the following credentials:
-   - Username: admin
-   - Password: aivancity
 
 ## Dependencies
 
@@ -96,8 +106,4 @@ The project uses Poetry for dependency management. To add new dependencies:
 poetry add package-name
 ```
 
-## License
-
-
 ## Contributing
-
