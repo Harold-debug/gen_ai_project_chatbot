@@ -107,3 +107,9 @@ poetry add package-name
 ```
 
 ## Contributing
+
+
+
+<img width="1470" alt="Screenshot 2025-05-13 at 03 12 59" src="https://github.com/user-attachments/assets/f65dc14f-75b8-4d5e-a69d-414c3d374457" />
+
+<img width="1470" alt="Screenshot 2025-05-13 at 03 13 19" src="https://github.com/user-attachments/assets/e64b8660-60eb-4665-a432-052976c6e7a7" />
