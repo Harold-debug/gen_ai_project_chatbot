@@ -3,14 +3,12 @@ from rag import RAGSystem
 import os
 
 def initialize_rag():
-    # Create data directory if it doesn't exist
     os.makedirs("data", exist_ok=True)
     
     # Initialize components
     data_loader = AivancityDataLoader()
     rag_system = RAGSystem()
     
-    # Load PDFs
     print("Loading PDFs from data directory...")
     documents = data_loader.load_pdfs()
     
@@ -22,10 +20,8 @@ def initialize_rag():
     print("Processing documents...")
     processed_docs = data_loader.process_documents(documents)
     
-    # Save processed documents for reference
     data_loader.save_documents(processed_docs, "data/processed_documents.txt")
     
-    # Index documents
     print("Indexing documents...")
     rag_system.index_documents(processed_docs)
     

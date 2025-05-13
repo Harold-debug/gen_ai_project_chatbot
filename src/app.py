@@ -3,36 +3,34 @@ Main Chainlit application for the Aivancity RAG Agent.
 This module handles the web interface and chat interactions.
 """
 
+import uuid
 import os
 import chainlit as cl
 from dotenv import load_dotenv
 from rag import RAGSystem
 from agent import AivancityAgent
+import logging
 
-# Load environment variables from .env file
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 
-# Initialize RAG system for document retrieval
 rag_system = RAGSystem()
 
-# Load the FAISS index for document search
 try:
     rag_system.load_index()
 except ValueError:
     print("Warning: No FAISS index found. Please run initialize.py first.")
 
-# Initialize the conversational agent with OpenAI
 agent = AivancityAgent(rag_system)
 
 @cl.on_chat_start
 async def start():
-    """
-    Initialize a new chat session.
-    Sends a welcome message to the user.
-    """
+    cl.user_session.set("id", cl.user_session.get("id") or str(uuid.uuid4()))
     await cl.Message(
         content="Welcome to Aivancity Assistant! How can I help you today?",
-        author="Assistant"
+        author="Assistant",
     ).send()
 
 @cl.on_message
@@ -49,26 +47,25 @@ async def main(message: cl.Message):
     3. Updates the UI with the response
     4. Handles any errors gracefully
     """
+    session_id: str = cl.user_session.get("id")
+
+    
     # Create a new message for the response
     response = cl.Message(content="", author="Assistant")
     await response.send()
 
+
     try:
-        # Get response from agent
-        agent_response = agent.get_response(message.content)
-        
-        # Stream the response token by token
-        for token in agent_response.split():
-            await response.stream_token(token + " ")
-        
-        # Finalize the message to prevent flickering
-        await response.update()
+        # Get response from agent and stream tokens
+        async for token in agent.get_response(message.content, session_id):
+            await response.stream_token(token)
+            await response.update()
         
     except Exception as e:
-        # Handle errors gracefully
         error_message = f"I apologize, but I encountered an error: {str(e)}"
-        await response.update(error_message)
-        print(f"Error in chat: {str(e)}")
+        logger.error(f"Error in chat: {str(e)}")
+        response.content = error_message
+        await response.update()
 
 @cl.on_stop
 async def on_stop():
@@ -76,4 +73,4 @@ async def on_stop():
     Handle chat session end.
     Called when the user ends the chat session.
     """
-    print("Chat session ended") 
+    logger.info("Chat session ended") 
