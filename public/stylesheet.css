@@ -10,3 +10,39 @@ img[alt="logo"] {
   height: 100px !important;
   object-fit: contain;
 } 
+
+/* Remove avatar background only inside the top-right user button */
+button.MuiIconButton-root > .MuiAvatar-root {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Make the icon inside it golden */
+button.MuiIconButton-root > .MuiAvatar-root svg {
+  color: #B08A2E !important;
+  stroke: #B08A2E !important;
+}
+
+.cl-chat-input .MuiButton-root:hover,
+.cl-chat-input .MuiButton-containedPrimary:hover {
+  background-color: #806517 !important; /* darker gold hover */
+}
+
+/* New Chat button (top-right) */
+#new-chat-button {
+  /* background-color: #B08A2E !important; */
+  color: #B08A2E !important;
+}
+/* #new-chat-button:hover {
+  background-color: #2B2C4A !important;
+} */
+
+/* Send button (Telegram icon) */
+button.MuiIconButton-root svg[data-testid="TelegramIcon"] {
+  color: #B08A2E !important;
+  stroke: #B08A2E !important;
+}
+button.MuiIconButton-root:hover svg[data-testid="TelegramIcon"] {
+  color: #806517 !important;
+  stroke: #806517 !important;
+}
