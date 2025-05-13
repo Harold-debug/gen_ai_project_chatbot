@@ -9,7 +9,6 @@ from typing import Dict, List, Tuple, AsyncGenerator
 
 from dotenv import load_dotenv
 from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_core.messages import (
     SystemMessage,
     HumanMessage,
@@ -18,6 +17,8 @@ from langchain_core.messages import (
 )
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
+import chainlit as cl
+from duckduckgo_search import DDGS
 
 from rag import RAGSystem
 
@@ -31,7 +32,6 @@ class AivancityAgent:
 
     def __init__(self, rag_system: RAGSystem, model_name: str = "gpt-3.5-turbo"):
         self.rag = rag_system
-        self.web_search = DuckDuckGoSearchRun()
 
         self.llm = ChatOpenAI(
             model=model_name,
@@ -64,6 +64,12 @@ class AivancityAgent:
     def clear_history(self, session_id: str) -> None:
         self._histories.pop(session_id, None)
 
+    def _web_search(self, query: str, max_results: int = 3) -> str:
+        results = []
+        with DDGS() as ddgs:
+            for r in ddgs.text(query, max_results=max_results):
+                results.append(f"- {r['title']}: {r['body']} ({r['href']})")
+        return "\n".join(results)
 
     async def get_response(
         self,
@@ -75,16 +81,31 @@ class AivancityAgent:
 
         Chainlit will display them as they arrive.
         """
+        # Create status message for thought process
+        status_msg = cl.Message(content="💭 Starting to process your query...", author="Assistant")
+        await status_msg.send()
+        cl.user_session.set("status_msg", status_msg)
+
         history = self._history(session_id)
         history.add_user_message(user_input)
 
+        # Update status for RAG retrieval
+        status_msg.content = "🔍 Searching through knowledge base..."
+        await status_msg.update()
+        
         docs = self.rag.retrieve(user_input)
         context = "\n".join(d.page_content for d in docs)
 
-        # fall back to web search if the RAG docs are scarce
         if len(docs) < 2:
-            context += "\n\nAdditional web search:\n" + self.web_search.run(user_input)
+            # Update status for web search
+            status_msg.content = "🌐 Performing web search for additional context..."
+            await status_msg.update()
+            web_results = self._web_search(user_input)
+            context += f"\n\nAdditional web search:\n{web_results}"
 
+        # Update status for response generation
+        status_msg.content = "🤔 Generating response..."
+        await status_msg.update()
         
         messages: List[BaseMessage] = self.prompt.format_messages(
             chat_history=history.messages,
@@ -96,10 +117,19 @@ class AivancityAgent:
 
         
         full_answer = ""
+        first_token = True
         async for chunk in self.llm.astream(messages):
             if chunk.content:
                 token: str = chunk.content
                 full_answer += token
+                # Update final status
+                status_msg.content = "✅ Response complete!"
+                await status_msg.update()
+                if first_token:
+                    await status_msg.remove()  # Remove status message as soon as the first token is about to be shown
+                    first_token = False
                 yield token  # Chainlit gets the token immediately
+
+        
 
         history.add_ai_message(full_answer)
