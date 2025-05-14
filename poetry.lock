@@ -1549,6 +1549,19 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "tavily-python"
+version = "0.7.2"
+description = "Python wrapper for the Tavily API"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+httpx = "*"
+requests = "*"
+tiktoken = ">=0.5.1"
+
+[[package]]
 name = "tenacity"
 version = "8.5.0"
 description = "Retry code until it succeeds"
@@ -1882,7 +1895,7 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.12.9"
-content-hash = "c85ec5abe75d7302cb409780b5ab42d18bf7389f844842927e410b6682981def"
+content-hash = "641082abebd8a406da93b43d60cef0267385f9783f7323c5ba8a6bca6bc07b71"
 
 [metadata.files]
 aiofiles = [
@@ -4030,6 +4043,10 @@ sympy = [
 ]
 syncer = [
     {file = "syncer-2.0.3.tar.gz", hash = "sha256:4340eb54b54368724a78c5c0763824470201804fe9180129daf3635cb500550f"},
+]
+tavily-python = [
+    {file = "tavily_python-0.7.2-py3-none-any.whl", hash = "sha256:0d7cc8b1a2f95ac10cf722094c3b5807aade67cc7750f7ca605edef7455d4c62"},
+    {file = "tavily_python-0.7.2.tar.gz", hash = "sha256:34f713002887df2b5e6b8d7db7bc64ae107395bdb5f53611e80a89dac9cbdf19"},
 ]
 tenacity = [
     {file = "tenacity-8.5.0-py3-none-any.whl", hash = "sha256:b594c2a5945830c267ce6b79a166228323ed52718f30302c1359836112346687"},
