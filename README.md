@@ -10,7 +10,30 @@ git clone https://github.com/Harold-debug/gen_ai_project_chatbot.git
 cd gen_ai_project_chatbot
 ```
 
-2. Install dependencies (choose one method):
+2. Set up a Python virtual environment (choose one method):
+
+   **Using venv (recommended):**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+
+   **Using conda:**
+   ```bash
+   # Create conda environment
+   conda create -n aivancity-chatbot python=3.12.9
+   
+   # Activate conda environment
+   conda activate aivancity-chatbot
+   ```
+
+3. Install dependencies (choose one method):
 
    **Using Poetry:**
    ```bash
@@ -22,14 +45,15 @@ cd gen_ai_project_chatbot
    pip install -r requirements.txt
    ```
 
-3. Create a `.env` file in the root directory:
+4. Create a `.env` file in the root directory:
 ```
 OPENAI_API_KEY=your_api_key_here
+TAVILY_API_KEY=your_tavily_api_key_here
 ```
 
-4. Place your PDF documents in the `data/` directory
+5. Place your PDF documents in the `data/` directory
 
-5. Initialize the RAG system:
+6. Initialize the RAG system:
 ```bash
 # With Poetry
 poetry run python src/initialize.py
@@ -38,7 +62,7 @@ poetry run python src/initialize.py
 python src/initialize.py
 ```
 
-6. Start the application:
+7. Start the application:
 ```bash
 # With Poetry
 poetry run chainlit run src/app.py
@@ -47,7 +71,7 @@ poetry run chainlit run src/app.py
 chainlit run src/app.py
 ```
 
-7. Open your browser and navigate to `http://localhost:8000`
+8. Open your browser and navigate to `http://localhost:8000`
 
 ## Features
 
@@ -57,6 +81,8 @@ chainlit run src/app.py
 - Interactive chat interface
 - Modern UI with Chainlit
 - Real-time streaming responses
+- Smart web search integration with Tavily
+- Intelligent context-aware responses
 
 ## Project Structure
 
@@ -137,7 +163,7 @@ gen_ai_project_chatbot/
 │                           ▼                  ▼                           │
 │                     ┌─────────────┐    ┌─────────────┐                   │
 │                     │Web Search   │    │Context     │                   │
-│                     │(DuckDuckGo) │    │Merging     │                   │
+│                     │(Tavily)     │    │Merging     │                   │
 │                     └─────────────┘    └─────────────┘                   │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -183,8 +209,8 @@ gen_ai_project_chatbot/
 │  └─────────────┘    └─────────────┘    └─────────────┘    └──────────┘  │
 │                                                                         │
 │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌──────────┐  │
-│  │ PyMuPDF     │    │Sentence     │    │DuckDuckGo   │    │Python    │  │
-│  │             │    │Transformers │    │Search       │    │3.12.9    │  │
+│  │ PyMuPDF     │    │Sentence     │    │Tavily      │    │Python    │  │
+│  │             │    │Transformers │    │Search      │    │3.12.9    │  │
 │  └─────────────┘    └─────────────┘    └─────────────┘    └──────────┘  │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -195,6 +221,7 @@ gen_ai_project_chatbot/
 
 - Python 3.12.9
 - OpenAI API key
+- Tavily API key
 - PDF documents to process
 
 ## Dependencies
