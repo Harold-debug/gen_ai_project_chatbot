@@ -14,7 +14,6 @@ from typing import Dict, Any, List, AsyncGenerator, TypedDict, Optional
 from datetime import datetime
 
 from dotenv import load_dotenv
-from duckduckgo_search import DDGS
 import chainlit as cl
 
 from langchain_core.messages import SystemMessage, HumanMessage, BaseMessage

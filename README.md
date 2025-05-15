@@ -10,9 +10,9 @@ git clone https://github.com/Harold-debug/gen_ai_project_chatbot.git
 cd gen_ai_project_chatbot
 ```
 
-2. Set up a Python virtual environment (choose one method):
+2. Set up a Python virtual environment (choose one method) or Used poetry as defined in #3 below(my preferred method):
 
-   **Using venv (recommended):**
+   **Using venv:**
    ```bash
    # Create virtual environment
    python -m venv venv
@@ -238,7 +238,6 @@ gen_ai_project_chatbot/
 - beautifulsoup4 (^4.12.3)
 - requests (^2.31.0)
 - pymupdf (^1.23.26)
-- duckduckgo-search (^3.9.9)
 
 ## Development
 
