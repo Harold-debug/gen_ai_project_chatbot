@@ -74,9 +74,29 @@ class AivancityAgent:
             "   - Recent events or data\n\n"
             "Respond with exactly YES or NO."
         )
+
+        self.query_generation_prompt = PromptTemplate.from_template(
+            "You are a search query optimizer. Your task is to generate an effective search query based on the user's question and chat history.\n\n"
+            "Chat History:\n{chat_history}\n\n"
+            "Current Question: {question}\n\n"
+            "NOTE: The current question could be in the chat history based if the conversation continued for example before we go to making the search\n\n"
+            "Generate a search query that:\n"
+            "1. Is specific and focused\n"
+            "2. Includes relevant context from the chat history\n"
+            "3. Uses appropriate keywords for web search\n"
+            "4. Is concise but comprehensive\n\n"
+            "Search Query:"
+        )
+
         self.search_decision_chain = (
             self.search_decision_prompt 
             | self.llm 
+            | StrOutputParser()
+        )
+
+        self.query_generation_chain = (
+            self.query_generation_prompt
+            | self.llm
             | StrOutputParser()
         )
 
@@ -134,6 +154,22 @@ class AivancityAgent:
         logger.info(f"Search decision result: {result}")
         return "yes" if "yes" in result.lower() else "no"
 
+    def _generate_search_query(self, question: str, chat_history: List[BaseMessage]) -> str:
+        """Generate an optimized search query based on the question and chat history."""
+        logger.info("Generating optimized search query...")
+        # Convert chat history to string format
+        history_str = "\n".join([
+            f"{'User' if isinstance(msg, HumanMessage) else 'Assistant'}: {msg.content}"
+            for msg in chat_history[-5:]  # Use last 5 messages for context
+        ])
+        
+        query = self.query_generation_chain.invoke({
+            "question": question,
+            "chat_history": history_str
+        })
+        logger.info(f"Generated search query: {query}")
+        return query
+
     def _build_graph(self):
         g = StateGraph(AgentState)
 
@@ -160,7 +196,14 @@ class AivancityAgent:
             status.content = "🌐 Searching the web for additional information..."
             await status.update()
             logger.info("Performing web search...")
-            state["web_results"] = self._web_search(state["user_input"])
+            
+            # Generate optimized search query
+            search_query = self._generate_search_query(
+                state["user_input"],
+                state["history"].messages
+            )
+            
+            state["web_results"] = self._web_search(search_query)
             logger.info(f"Web search returned {len(state['web_results'].split('\n'))} results")
             return state
 
