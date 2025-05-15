@@ -14,7 +14,7 @@ def initialize_rag():
     
     if not documents:
         print("No PDFs found in the data directory. Please add PDF files to the 'data' directory.")
-        return
+        return None
     
     # Process documents
     print("Processing documents...")
@@ -32,6 +32,8 @@ def initialize_rag():
     print(f"Total documents processed: {len(processed_docs)}")
     print("\nYou can now run the test script with:")
     print("poetry run python src/test_rag.py")
+    
+    return rag_system
 
 if __name__ == "__main__":
     initialize_rag() 
