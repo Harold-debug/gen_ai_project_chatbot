@@ -1,0 +1,9 @@
+=== RAGAS Evaluation Summary ===
+Timestamp: 2025-05-15 15:17:31
+Number of queries evaluated: 5
+
+Metric Scores:
+faithfulness: 0.3000
+context_precision: 0.8219
+context_recall: 0.8500
+answer_relevancy: 0.5128
