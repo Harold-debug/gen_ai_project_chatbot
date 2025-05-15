@@ -190,19 +190,7 @@ class AivancityAgent:
         )
         g.add_edge("search", "generate")
         g.set_finish_point("generate")
-        graph = g.compile()
-        
-        # Optional: Try to save graph visualization
-        # try:
-        #     img = graph.get_graph().draw_mermaid_png()
-        #     dst = f"langgraph_graph/graph_{datetime.now():%Y-%m-%d_%H-%M-%S}.png"
-        #     os.makedirs(os.path.dirname(dst), exist_ok=True)
-        #     with open(dst, "wb") as f:
-        #         f.write(img)
-        # except Exception as e:
-        #     logger.warning(f"Failed to generate graph visualization: {str(e)}")
-
-        return graph
+        return g.compile()
 
     async def get_response(
         self, user_input: str, session_id: str
