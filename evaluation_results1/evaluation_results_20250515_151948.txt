@@ -1,0 +1,147 @@
+RAG Pipeline Evaluation Results
+==================================================
+
+Evaluation Date: 2025-05-15 15:19:48
+Number of Test Cases: 3
+
+Test Case 1
+------------------------------
+Question: What are the main programs offered at Aivancity?
+Expected Answer: Aivancity offers various programs in technology, AI and business.
+
+Retrieval Evaluation:
+--------------------
+Number of Documents Retrieved: 3
+
+Relevance Assessment:
+Document 1:
+1. Rating: 3
+2. Explanation: This document provides information about the admission process at Aivancity, including the selection tests and admission conditions for the Master of Science program. It also briefly mentions the Bachelor Degree program.
+3. Missing information: The document does not specifically mention the main programs offered at Aivancity, such as the Bachelor of Science and Master of Science programs.
+
+Document 2:
+1. Rating: 4
+2. Explanation: This document provides a brief overview of Aivancity's mission and the type of engineers they aim to produce. It mentions the focus on Artificial Intelligence, Business, and Ethics.
+3. Missing information: The document does not explicitly list the main programs offered at Aivancity, but it does provide relevant information about the school's focus areas.
+
+Document 3:
+1. Rating: 4
+2. Explanation: This document provides information about Aivancity School for Technology, Business, and Society, including the type of institution, location, number of students, and qualifications awarded.
+3. Missing information: While it mentions the Bachelor of Science and Master of Science programs, it does not provide detailed information about the specific programs offered at Aivancity.
+
+Answer Evaluation:
+--------------------
+Generated Answer:
+The main programs offered at Aivancity School for Technology, Business and Society are undergraduate to postgraduate programs in Artificial Intelligence, Business, and Ethics, including a Master of Science program in Data Management.
+
+Quality Assessment:
+Accuracy: 4
+The information provided is accurate as it mentions the main programs offered at Aivancity School for Technology, Business and Society, including undergraduate to postgraduate programs in Artificial Intelligence, Business, and Ethics, as well as a Master of Science program in Data Management. There are no significant errors in the information provided.
+
+Completeness: 4
+The answer covers the main programs offered at Aivancity, but it could be more detailed by providing additional information about each program, such as specific courses, duration, and any unique features or opportunities they offer to students.
+
+Relevance: 5
+The answer is completely focused on the question and provides relevant information about the main programs offered at Aivancity School for Technology, Business and Society.
+
+Clarity: 4
+The answer is clear and well-structured, but it could be improved by providing more specific details about each program offered at Aivancity to enhance understanding for the reader.
+
+Overall, the answer is accurate, relevant, and clear, but it could be more comprehensive by providing additional details about each program offered at Aivancity.
+
+==================================================
+
+Test Case 2
+------------------------------
+Question: How can I apply to Aivancity?
+Expected Answer: Information about the application process at Aivancity.
+
+Retrieval Evaluation:
+--------------------
+Number of Documents Retrieved: 3
+
+Relevance Assessment:
+Document 1:
+1. Rating: 5
+2. Explanation: This document provides detailed information on the admission requirements and process for applying to Aivancity, including the necessary qualifications, selection tests, and where to find more information.
+3. Missing information: None, as it directly addresses the question on how to apply to Aivancity.
+
+Document 2:
+1. Rating: 4
+2. Explanation: This document also provides relevant information on the admission requirements and process for Aivancity, including the competitive entrance examination and selection tests based on knowledge, skills, and open-mindedness.
+3. Missing information: The document could have provided more details on the specific steps or procedures for applying to Aivancity.
+
+Document 3:
+1. Rating: 3
+2. Explanation: This document provides general information about Aivancity, including the type of institution, location, number of students, and qualifications awarded. While it does not directly address the application process, it gives an overview of the school.
+3. Missing information: Specific details on the application process, admission requirements, and how to apply to Aivancity are not included in this document.
+
+Answer Evaluation:
+--------------------
+Generated Answer:
+To apply to Aivancity, you can visit the school's website at www.aivancity.ai to find the admission conditions and tests for the competition. For the Bachelor's degree program, access is based on a competitive entrance examination outside of Parcoursup. The application fee is 90€. If you have any further questions or need assistance with the application process, feel free to ask!
+
+Quality Assessment:
+1. Accuracy: 5
+The information provided is accurate and verifiable. It clearly outlines the steps to apply to Aivancity and mentions the competitive entrance examination and application fee.
+
+2. Completeness: 4
+The answer covers the main points of the application process, including visiting the school's website, admission conditions, tests, competitive entrance examination, and application fee. However, it could be more detailed by providing specific deadlines or additional requirements.
+
+3. Relevance: 5
+The answer is completely focused on the question and provides relevant information about applying to Aivancity.
+
+4. Clarity: 4
+The answer is clear and well-explained, but it could be improved by providing more specific details about the application process, such as deadlines and required documents.
+
+Overall, the answer is informative and accurate, but could benefit from more detailed information to enhance completeness and clarity.
+
+==================================================
+
+Test Case 3
+------------------------------
+Question: What is the campus location of Aivancity?
+Expected Answer: Details about Aivancity's campus location.
+
+Retrieval Evaluation:
+--------------------
+Number of Documents Retrieved: 3
+
+Relevance Assessment:
+Document 1:
+1. Rating: 5
+2. Explanation: This document provides the exact campus location of Aivancity, which is in Cachan, 10 minutes from Paris. It also mentions the proximity of university residence and restaurant to the campus.
+3. Missing/irrelevant information: None
+
+Document 2:
+1. Rating: 3
+2. Explanation: This document mentions the website for more information on accommodation and food options near the campus, which could potentially provide additional details about the campus location.
+3. Missing/irrelevant information: Specific details about the campus location are not directly provided in this document.
+
+Document 3:
+1. Rating: 5
+2. Explanation: This document explicitly states the location of Campus Aivancity in Cachan, France, providing relevant information about the campus location.
+3. Missing/irrelevant information: None
+
+Answer Evaluation:
+--------------------
+Generated Answer:
+The campus location of Aivancity is in Cachan, France, which is just 10 minutes away from Paris.
+
+Quality Assessment:
+1. Accuracy: 5
+The information provided is completely accurate and verifiable. The campus location of Aivancity is indeed in Cachan, France, just 10 minutes away from Paris.
+
+2. Completeness: 4
+The answer covers the main point of the question by stating the campus location of Aivancity in Cachan, France. However, it could be more detailed by including additional information such as the specific address or any notable landmarks nearby.
+
+3. Relevance: 5
+The answer is completely focused on the question and provides relevant information about the campus location of Aivancity.
+
+4. Clarity: 5
+The answer is exceptionally clear and well-structured. It is easy to understand and effectively communicates the information.
+
+Overall, the answer is accurate, relevant, and clear. To improve completeness, consider adding more specific details about the campus location, such as the address or nearby landmarks.
+
+==================================================
+

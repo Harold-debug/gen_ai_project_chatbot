@@ -30,7 +30,7 @@ class RAGSystem:
         """Load FAISS index from disk."""
         self.vector_store = FAISS.load_local(path, self.embeddings, allow_dangerous_deserialization=True)
 
-    def retrieve(self, query: str, k: int = 4) -> List[Document]:
+    def retrieve(self, query: str, k: int = 5) -> List[Document]:
         """Retrieve relevant documents for a query."""
         if not self.vector_store:
             raise ValueError("Vector store not initialized. Please load or create an index first.")
